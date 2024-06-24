@@ -21,7 +21,7 @@ public class TestMethodsDemo {
     }
     @Test
     public void logDemo(){
-        Reporter.log("这是我们自己写的日志");
+        Reporter.log("这是我们自己写的 日志");
         throw new RuntimeException("这是我自己运行时的异常");
     }
 }
