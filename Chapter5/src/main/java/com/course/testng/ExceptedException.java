@@ -9,7 +9,7 @@ public class ExceptedException {
 
 //这是测试结果失败的测试
     @Test(expectedExceptions = RuntimeException.class)
-    public void runTimeEXceptionFailed(){
+    public void runTimeExceptionFailed(){
     System.out.println("这是个失败的异常测试");
 }
 
