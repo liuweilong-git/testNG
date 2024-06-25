@@ -1,5 +1,6 @@
 package com.course.httpclient.cookies;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpGet;
@@ -13,7 +14,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Locale;
@@ -89,6 +92,10 @@ public class MyCookiesForPost {
         //执行post方法
         HttpResponse response = client.execute(post);
         //获取响应结果
+        HttpEntity responseEntity = response.getEntity();
+//        File downloadFile = new File("path/to/downloaded_file.txt");
+//
+//        responseEntity.writeTo((OutputStream) downloadFile.toPath());
         result = EntityUtils.toString(response.getEntity(),"utf-8");
         System.out.println(result);
         //处理结果，就是判断返回结果是否符合预期

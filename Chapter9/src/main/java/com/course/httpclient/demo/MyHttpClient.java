@@ -1,5 +1,7 @@
 package com.course.httpclient.demo;
-import com.sun.deploy.net.HttpResponse;
+//import com.sun.deploy.net.HttpResponse;
+import org.apache.http.HttpResponse;
+
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
@@ -7,10 +9,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.*;
 import org.apache.http.util.EntityUtils;
 import org.testng.annotations.Test;
 import java.io.IOException;
@@ -24,7 +23,9 @@ public class MyHttpClient {
         CookieStore cookieStore = new BasicCookieStore();
 
         CloseableHttpClient closeableHttpClient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
-        String urlStr = "http://localhost:8080/user/getCookie";
+//        HttpClients.custom().setDefaultCookieStore(cookieStore).build();
+//        HttpClient httpClient = HttpClientBuilder.create().build();
+        String urlStr = "http://localhost:8888/user/getCookie";
 //        构造http get请求对象
         HttpGet httpGet = new HttpGet(urlStr);
 //        可关闭的响应对象
@@ -73,5 +74,33 @@ public class MyHttpClient {
                 }
             }
         }
+    }
+
+    @Test
+    public void closeTest(){
+        try(CloseableHttpClient httpClient = HttpClientBuilder.create().build()) {
+            HttpGet httpGet = new HttpGet("http://localhost:8888/user/getCookie");
+            try (CloseableHttpResponse response = httpClient.execute(httpGet)){
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    String respomseString = EntityUtils.toString(entity);
+                    System.out.println("Response: " + respomseString);
+
+                    String toStringResult = EntityUtils.toString(entity, StandardCharsets.UTF_8);
+                    System.out.println(toStringResult);
+
+                    Header[] allHeaders = response.getAllHeaders();
+                    for (Header header : allHeaders) {
+                        System.out.println("打印头信息");
+                        System.out.println(header);
+                    }
+
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -5,6 +5,7 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -28,7 +29,7 @@ public class MyCookiesForGet {
 
     @Test
     public void testGetCookies() throws IOException {
-
+//需要启动moco服务，chapter7中 java -jar ./moco-runner-0.11.0-standalone.jar http -p 8888 -c startupWithCookies.json
         String result;
 //       从配置文件中 拼接测试的url
         String uri = bundle.getString("getCookies.uri");
@@ -60,6 +61,7 @@ public class MyCookiesForGet {
         String testUrl = this.url+uri;
         HttpGet get = new HttpGet(testUrl);
         DefaultHttpClient client = new DefaultHttpClient();
+//        DefaultHttpClient client = HttpClients.createDefault();
 
         //设置cookies信息
         client.setCookieStore(this.store);
